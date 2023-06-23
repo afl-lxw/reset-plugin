@@ -2,9 +2,9 @@ import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
   const importDetection = async () => {
-    const files = await vscode.workspace.findFiles('**/main.{js,ts}');
-    console.log(files, 'files find')
-    files.forEach(async (file) => {
+    const files = await vscode.workspace.findFiles('src/main.{js,ts}');
+    vscode.window.showInformationMessage(String(files))
+    files && files.forEach(async (file) => {
       const document = await vscode.workspace.openTextDocument(file);
       const text = document.getText();
 
@@ -19,8 +19,6 @@ export function activate(context: vscode.ExtensionContext) {
         console.log("检测到 Vue UI 库引用");
         const isElImport = text.includes("import element-ui");
         const isAntVImport = text.includes("import ant-design-vue");
-
-
       }
 
       if (isReactImport) {
@@ -34,14 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.showInformationMessage('执行 reset-plugin 命令!');
   }
 
-  let disposable = vscode.commands.registerCommand('reset-plugin.helloWorld', () => {
-    console.log("执行 reset-plugin 命令");
-    vscode.window.showInformationMessage('执行 reset-plugin 命令!');
-    vscode.window.showInformationMessage('Hello World from reset-plugin!');
-  });
-  context.subscriptions.push(disposable);
-
-
+  context.subscriptions.push(vscode.commands.registerCommand('reset-plugin.importDetection', importDetection));
   context.subscriptions.push(vscode.commands.registerCommand('reset-plugin.resetPlugin', resetPlugin));
 }
 

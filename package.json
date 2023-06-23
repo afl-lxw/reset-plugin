@@ -14,8 +14,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "reset-plugin.helloWorld",
-        "title": "Hello World"
+        "command": "reset-plugin.resetPlugin",
+        "title": "resetPlugin"
+      },
+      {
+        "command": "reset-plugin.importDetection",
+        "title": "importDetection"
       }
     ]
   },
